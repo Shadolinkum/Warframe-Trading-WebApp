@@ -6,12 +6,15 @@
         <script type="text/javascript">
             <!--
             function validateUsername(){
+                //get value from username box that the person just typed in, store as username
                 var username = document.forms["Registration_Form"]["username"].value;
                 
+                //if box is null or blank give error
                 if (username == null || username == "") {
                     document.getElementById("un").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
+                    //else do nothing/change message to empty sentence
                     document.getElementById("un").innerHTML = "";
                 }
                 //end of validateUsername
@@ -19,18 +22,23 @@
             
             
             function validatePassword(){
+                //get value for password from password box tht user just typed in
                 var password = document.forms["Registration_Form"]["password"].value;
+                //get value from retyped password
                 var password2 = document.forms["Registration_Form"]["password2"].value;
                 
-                // start with one character that has 0 or any number of A-Z or a-z or one of the symbols and it has to end in one of these characters. 
+                //start with one character that has 0 or any number of A-Z or a-z or one of the symbols and it has to end in one of these characters. 
                 var letters = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!_@#$%]).*$/;
                 
+                //error message if password box blank
                 if (password == null || password == "") {
                     document.getElementById("pass1").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
+                    //else reset error message to blank
                     document.getElementById("pass1").innerHTML = "";
                 }
+                //error message if password too short
                 if (password.length < 6) {
                     document.getElementById("pass1").innerHTML =
                             " ***passwords  must be 6 characters in length with \n\
@@ -38,12 +46,14 @@
                             symbol from the following list: !_@#$% ";
                     return false;
                 } else {
+                    //else reset error message
                     document.getElementById("pass1").innerHTML = "";
                 }
-
+                
+                //test if password syntax is right
                 var test = password.match(letters);
-                //alert(test);
-
+                
+                //alert for the test
                 if (test == null) {
                     document.getElementById("pass1").innerHTML =
                             " ***passwords  must be 6 characters in length with \n\
@@ -51,15 +61,18 @@
                             symbol from the following list: !_@#$% ";
                     return false;
                 } else {
+                    //else error message reset
                     document.getElementById("pass1").innerHTML = "";
                 }
 
+                //alert if password 2 is blank
                 if (password2 == null || password2 == "") {
                     document.getElementById("pass2").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
                     document.getElementById("pass2").innerHTML = "";
                 }
+                //alert if password 2 isnt equal to password 1
                 if (password !== password2) {
                     document.getElementById("pass2").innerHTML = "passwords do not match";
                     document.getElementById("pass1").innerHTML = "passwords do not match";
@@ -72,24 +85,34 @@
             }
             
             function validateEmail(){
+                //get value from email box
                 var email = document.forms["Registration_Form"]["email"].value;
+                //variable to hold position of the @ symbol in the email
                 var atIndex;
+                //hold position of the . in the email
                 var dotIndex;
                 
+                //alert if blank
                 if (email == null || email == "") {
                     document.getElementById("em").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
                     document.getElementById("em").innerHTML = "";
                 }
+                // store the places of the @ and . symbols
                 atIndex = email.indexOf("@");
                 dotIndex = email.lastIndexOf(".");
+                //if the @ symbol is the first character, or the dot comes before the @ symbol,
+                //or the . has two or less characters after it,
+                //the email is invalid
                 if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= email.length) {  
                       document.getElementById("em").innerHTML = "***invalid e-mail, email format is: email@place.com";
                       return false;  
                   }  else {
+                    // else alert reset
                     document.getElementById("em").innerHTML = "";
                 }
+                //make sure the ending of the email is edu, org, or com
                 if (email.search("edu") == email.length - 3 && email.search("edu") == dotIndex + 1) {
                     document.getElementById("em").innerHTML = "";
                     return true;
@@ -100,6 +123,7 @@
                     document.getElementById("em").innerHTML = "";
                     return true;
                 } else {
+                    //else the email is invalid
                     document.getElementById("em").innerHTML = "***invalid e-mail, only .edu, .org, or .com";
                     return false;
                 }
