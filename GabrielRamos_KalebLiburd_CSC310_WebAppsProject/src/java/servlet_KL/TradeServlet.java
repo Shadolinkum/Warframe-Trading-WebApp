@@ -97,6 +97,7 @@ public class TradeServlet extends HttpServlet {
                     }
                     out.println("</select><br><br>"
                             + "<input type=\"submit\" name=\"WTS\" value=\"item_categories\">"
+                            
                             + "</form>"
                             //__________________________________
 
