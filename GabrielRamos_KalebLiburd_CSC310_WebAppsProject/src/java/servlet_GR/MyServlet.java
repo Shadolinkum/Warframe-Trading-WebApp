@@ -44,10 +44,11 @@ public class MyServlet extends HttpServlet {
         SqlStatement sqlstatement = new SqlStatement();
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
-        
+
+        //if it doesnt exist, make it
         if (session == null) {
             //check if session exists.   
-            
+
 // Extract the parameters
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -55,27 +56,27 @@ public class MyServlet extends HttpServlet {
             ResultSet result = sqlstatement.executeQuery("SELECT email FROM  members WHERE username = '" + username + "' AND password = '" + password + "'");
             System.out.println("pass test data exec");
             try {
-                
+
                 if (result.next()) {
                     System.out.println("Found It");
                     result.close();
                     RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
-                    
+
                     out.println("<center><p style=\"font-size: 400%\">Thank you for signing in " + username + "!</p></center>");
-                    
+
                     session = request.getSession();
                     session.setAttribute("username", username);
                     //session.setMaxInactiveInterval(2*60);
                     //would set max inactive time to 2 minutes
                     rd.include(request, response);
-                    
+
                 } else {
                     result = sqlstatement.executeQuery("SELECT email FROM  members WHERE username = '" + username + "'");
                     if (result.next()) {
                         System.out.println("Found It");
                         RequestDispatcher rd = request.getRequestDispatcher("errorpage.html");
                         result.close();
-                        
+
                         out.println("<p style=\"font-size: 600%\"><center>Incorrect password, sorry " + username + ".</center></p>");
 
                         rd.include(request, response);
@@ -86,28 +87,28 @@ public class MyServlet extends HttpServlet {
                         out.println("<center><p style=\"font-size: 600%\">Wrong username.</p></center>");
 
                         rd.include(request, response);
-                        
+
                     }
                 }
             } catch (SQLException | IOException e) {
             }
-        } else {
-            //session exists
-            if(request.getParameter("session").equals("Log In")){
+        } else if (request.getParameter("session").equals("Log In")) {
+            //If session already exists
             RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
-             String username_from_session = (String) session.getAttribute("username");
-             out.println("<p style=\"font-size: 600%\">You've already signed in " + username_from_session + "!</p>");
-             
+            String username_from_session = (String) session.getAttribute("username");
+            out.println("<p style=\"font-size: 600%\">You've already signed in " + username_from_session + "!</p>");
+
             rd.include(request, response);
-            } else if(request.getParameter("session").equals("Log Out")){
-                session.invalidate();
-                response.sendRedirect("index.html");
-            }
-        } 
+
+        } else if (request.getParameter("session").equals("Log Out")) {
+            session.invalidate();
+            response.sendRedirect("index.html");
+        }
+
     }
-    
+
     public boolean existingUserCheck(String email, String studentid, HttpServletResponse response) {
-        
+
         return false;
     }
 
