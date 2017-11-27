@@ -5,94 +5,108 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript">
             <!--
-            function validate() {
+            function validateUsername(){
                 var username = document.forms["Registration_Form"]["username"].value;
+                
+                if (username == null || username == "") {
+                    document.getElementById("un").innerHTML = "***Cannot be blank";
+                    return false;
+                } else {
+                    document.getElementById("un").innerHTML = "";
+                }
+                //end of validateUsername
+            }
+            
+            
+            function validatePassword(){
                 var password = document.forms["Registration_Form"]["password"].value;
                 var password2 = document.forms["Registration_Form"]["password2"].value;
-                var email = document.forms["Registration_Form"]["email"].value;
-
+                
                 // start with one character that has 0 or any number of A-Z or a-z or one of the symbols and it has to end in one of these characters. 
                 var letters = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!_@#$%]).*$/;
-
-                if (username == null || username == "") {
-                    document.getElementById("username").innerHTML = "***Cannot be blank";
-                    return false;
-                } else {
-                    document.getElementById("username").innerHTML = "";
-                }
+                
                 if (password == null || password == "") {
-                    document.getElementById("password").innerHTML = "***Cannot be blank";
+                    document.getElementById("pass1").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
-                    document.getElementById("password").innerHTML = "";
+                    document.getElementById("pass1").innerHTML = "";
                 }
                 if (password.length < 6) {
-                    document.getElementById("password").innerHTML =
+                    document.getElementById("pass1").innerHTML =
                             " ***passwords  must be 6 characters in length with \n\
                             at least one Uppercase, lowercase character, and special \n\
                             symbol from the following list: !_@#$% ";
                     return false;
                 } else {
-                    document.getElementById("password").innerHTML = "";
+                    document.getElementById("pass1").innerHTML = "";
                 }
 
                 var test = password.match(letters);
                 //alert(test);
 
                 if (test == null) {
-                    document.getElementById("password").innerHTML =
+                    document.getElementById("pass1").innerHTML =
                             " ***passwords  must be 6 characters in length with \n\
                             at least one Uppercase, lowercase character, and special \n\
                             symbol from the following list: !_@#$% ";
                     return false;
                 } else {
-                    document.getElementById("password").innerHTML = "";
+                    document.getElementById("pass1").innerHTML = "";
                 }
 
                 if (password2 == null || password2 == "") {
-                    document.getElementById("password2").innerHTML = "***Cannot be blank";
+                    document.getElementById("pass2").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
-                    document.getElementById("password2").innerHTML = "";
+                    document.getElementById("pass2").innerHTML = "";
                 }
                 if (password !== password2) {
-                    document.getElementById("password2").innerHTML = "passwords do not match";
-                    document.getElementById("password").innerHTML = "passwords do not match";
+                    document.getElementById("pass2").innerHTML = "passwords do not match";
+                    document.getElementById("pass1").innerHTML = "passwords do not match";
                     return false;
                 } else {
-                    document.getElementById("password2").innerHTML = "";
-                    document.getElementById("password").innerHTML = "";
+                    document.getElementById("pass2").innerHTML = "";
+                    document.getElementById("pass1").innerHTML = "";
                 }
-
+                //end of validatePassword
+            }
+            
+            function validateEmail(){
+                var email = document.forms["Registration_Form"]["email"].value;
+                var atIndex;
+                var dotIndex;
+                
                 if (email == null || email == "") {
-                    document.getElementById("email").innerHTML = "***Cannot be blank";
+                    document.getElementById("em").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
-                    document.getElementById("email").innerHTML = "";
+                    document.getElementById("em").innerHTML = "";
                 }
                 atIndex = email.indexOf("@");
                 dotIndex = email.lastIndexOf(".");
                 if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= email.length) {  
-                      document.getElementById("email").innerHTML = "***invalid e-mail, only .edu, .org, or .com";
+                      document.getElementById("em").innerHTML = "***invalid e-mail, email format is: email@place.com";
                       return false;  
                   }  else {
-                    document.getElementById("email").innerHTML = "";
+                    document.getElementById("em").innerHTML = "";
                 }
                 if (email.search("edu") == email.length - 3 && email.search("edu") == dotIndex + 1) {
-                    document.getElementById("email").innerHTML = "";
+                    document.getElementById("em").innerHTML = "";
                     return true;
                 } else if (email.search("org") == dotIndex + 1 && email.search("org") == email.length - 3) {
-                    document.getElementById("email").innerHTML = "";
+                    document.getElementById("em").innerHTML = "";
                     return true;
                 } else if (email.search("com") == dotIndex + 1 && email.search("com") == email.length - 3) {
-                    document.getElementById("email").innerHTML = "";
+                    document.getElementById("em").innerHTML = "";
                     return true;
                 } else {
-                    document.getElementById("email").innerHTML = "***invalid e-mail, only .edu, .org, or .com";
+                    document.getElementById("em").innerHTML = "***invalid e-mail, only .edu, .org, or .com";
                     return false;
                 }
-
+                //end of validateEmail
             }
+            
+
             //-->
         </script>
     </head>
@@ -101,15 +115,28 @@
     <center>
         <p style="color: blue; font-size: 200%">Sign up here!</p>
 
-        <form name="Registration_Form" action="sign-up" onsubmit="return validate()" method="POST">
+        <form name="Registration_Form" action="sign-up" method="POST">
             <b>Username:</b><br>
-            <input type="text" name="username">                <label style=" color: red" id ="username"></label>                <br><br>
-            <b>Password:</b><br>
-            <input type="password" name="password">                      <label style=" color: red" id ="password"></label>                   <br><br>
+            <input type="text" name="username" onkeyup ="return validateUsername()">                <label style=" color: red" id ="username"></label>
+            <p style ="color: red" id ="un"></p>
+            <br>
+            
+            <b>Password:</b>
+            <br>
+            <input type="password" name="password" onkeyup ="return validatePassword()">                      <label style=" color: red" id ="password"></label>
+            <p style ="color: red" id ="pass1"></p>
+            <br>
+            
             <b>Re-enter Password:</b><br>
-            <input type="password" name="password2">                  <label style=" color: red" id ="password2"></label>             <br><br>
+            <input type="password" name="password2" onkeyup ="return validatePassword()">                  <label style=" color: red" id ="password2"></label>
+            <p style ="color: red"  id ="pass2"></p>
+            <br>
+            
             <b>E-mail:</b><br>
-            <input type="text" name="email">                        <label style=" color: red" id ="email"></label>                    <br><br>
+            <input type="text" name="email" onkeyup ="return validateEmail()">                        <label style=" color: red" id ="email"></label>
+            <p style ="color: red" id ="em"></p>
+            <br>
+            
             <input type="submit" name="regsubmit" value="Sign Up">
         </form><br>
 
