@@ -19,7 +19,7 @@ public class DatabaseMain {
     private Connection connection = null;
     Statement st;
     String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    String DB_URL = "jdbc:mysql://localhost/myproject";
+    String DB_URL = "jdbc:mysql://localhost/warframe_trading_app";
     String USER = "root";
     String PASS = "Sweetlove_32";
     
