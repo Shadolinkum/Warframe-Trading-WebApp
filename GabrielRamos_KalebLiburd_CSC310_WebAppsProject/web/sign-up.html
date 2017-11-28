@@ -139,7 +139,7 @@
     <center>
         <p style="color: blue; font-size: 200%">Sign up here!</p>
 
-        <form name="Registration_Form" action="sign-up" method="POST">
+        <form name="Registration_Form" action="sign-up" onsubmit="return validateUsername(), validatePassword(), validateEmail() " method="POST">
             <b>Username:</b><br>
             <input type="text" name="username" onkeyup ="return validateUsername()">                <label style=" color: red" id ="username"></label>
             <p style ="color: red" id ="un"></p>
