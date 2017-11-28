@@ -76,7 +76,7 @@ public class MyOtherServlet extends HttpServlet {
                             + "</html>\n"
                             + "");
 
-                    result = statement.executeUpdate("CREATE TABLE IF NOT EXISTS `myproject`.`" + username + "_inventory` (\n"
+                    result = statement.executeUpdate("CREATE TABLE IF NOT EXISTS `warframe_trading_app`.`" + username + "_inventory` (\n"
                             + "  `username` VARCHAR(45) NOT NULL DEFAULT '" + username + "',\n"
                             + "  `my_item_name` VARCHAR(45) NOT NULL,\n"
                             + "  `quantity` INT(45) NOT NULL,\n"
@@ -84,7 +84,7 @@ public class MyOtherServlet extends HttpServlet {
                             + "  PRIMARY KEY (`my_item_name`),\n"
                             + "  CONSTRAINT `" + username + "_members_FK`\n"
                             + "    FOREIGN KEY (`username`)\n"
-                            + "    REFERENCES `myproject`.`members` (`username`)\n"
+                            + "    REFERENCES `warframe_trading_app`.`members` (`username`)\n"
                             + "    ON DELETE CASCADE\n"
                             + "    ON UPDATE CASCADE)\n"
                             + "ENGINE = InnoDB\n"
