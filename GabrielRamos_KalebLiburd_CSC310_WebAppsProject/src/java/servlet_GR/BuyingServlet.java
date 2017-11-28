@@ -60,7 +60,6 @@ public class BuyingServlet extends HttpServlet {
                 out.println("</select>"
                         + "<input type=\"submit\" value=\"Buy\"><br>"
                         + "</form>"
-                        + "<A href=\"welcome.html\"><p style=\"font-size: 200%\">Back to Home</p></A>"
                         + "<form name =\"backButtonFrom BuyingServlet\" action=\"welcome.html\" method=\"POST\">"
                         + "<input type = \"submit\" name = \"backButton\" value = \"Back\">"
                         + "</form>"
