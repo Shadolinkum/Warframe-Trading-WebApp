@@ -18,7 +18,7 @@ public class Connect {
         makeConnection();
     }
 
-    static final String DB_URL = "jdbc:mysql://localhost:3306/myproject";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/warframe_trading_app";
     static final String USER = "root";
     static final String PASS = "Sweetlove_32";
 
