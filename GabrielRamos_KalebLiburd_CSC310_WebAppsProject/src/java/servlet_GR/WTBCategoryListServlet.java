@@ -44,14 +44,14 @@ public class WTBCategoryListServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            if (result.next()) {
+            if (result.first()) {
                 RequestDispatcher rd = request.getRequestDispatcher("WTB.html");
                 rd.include(request, response);
                 out.println("<form name=\"CategoryListForm\" action=\"BuyingServlet\">"
                         + "<select name=\"CategoryList\">");
-                while(result.next()){
-                            out.println("<option value=\""+ result.getString(1) +"\">"+ result.getString(1) +"</option>");
-                        }
+                do {
+                    out.println("<option value=\"" + result.getString(1) + "\">" + result.getString(1) + "</option>");
+                } while (result.next());
                 out.println("</select>"
                         + "<input type=\"submit\" name=\"Pick\">"
                         + "</form>");

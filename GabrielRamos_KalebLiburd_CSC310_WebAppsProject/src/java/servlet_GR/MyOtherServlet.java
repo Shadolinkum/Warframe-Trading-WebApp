@@ -61,7 +61,7 @@ public class MyOtherServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             System.out.println("Record Inserted");
             try {
-                if (searchResults.next()) {
+                if (searchResults.first()) {
                     searchResults.close();
                     out.println("<html>\n"
                             + "    <head>\n"
@@ -97,7 +97,7 @@ public class MyOtherServlet extends HttpServlet {
         } else {
             System.out.println("Insert Failed");
             try {
-                if (searchResults.next()) {
+                if (searchResults.first()) {
                     searchResults.close();
                     out.println("<html>\n"
                             + "    <head>\n"
@@ -113,7 +113,7 @@ public class MyOtherServlet extends HttpServlet {
                             + "");
                 } else {
                     searchResults = statement.executeQuery("SELECT username FROM  members WHERE username = '" + username + "' AND password = '" + password + "'");
-                    if (searchResults.next()) {
+                    if (searchResults.first()) {
                         searchResults.close();
                         out.println("<html>\n"
                                 + "    <head>\n"
@@ -129,7 +129,7 @@ public class MyOtherServlet extends HttpServlet {
                                 + "");
                     } else {
                         searchResults = statement.executeQuery("SELECT username FROM  members WHERE username = '" + username + "'");
-                        if (searchResults.next()) {
+                        if (searchResults.first()) {
                             searchResults.close();
                             out.println("<html>\n"
                                     + "    <head>\n"
