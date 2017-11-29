@@ -5,12 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript">
             <!--
+                      
             function validateUsername(){
                 //get value from username box that the person just typed in, store as username
                 var username = document.forms["Registration_Form"]["username"].value;
-                
+            
                 //if box is null or blank give error
-                if (username == null || username == "") {
+                if (username === null || username === "") {
                     document.getElementById("un").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
@@ -31,7 +32,7 @@
                 var letters = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!_@#$%]).*$/;
                 
                 //error message if password box blank
-                if (password == null || password == "") {
+                if (password === null || password === "") {
                     document.getElementById("pass1").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
@@ -54,7 +55,7 @@
                 var test = password.match(letters);
                 
                 //alert for the test
-                if (test == null) {
+                if (test === null) {
                     document.getElementById("pass1").innerHTML =
                             " ***passwords  must be 6 characters in length with \n\
                             at least one Uppercase, lowercase character, and special \n\
@@ -66,7 +67,7 @@
                 }
 
                 //alert if password 2 is blank
-                if (password2 == null || password2 == "") {
+                if (password2 === null || password2 === "") {
                     document.getElementById("pass2").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
@@ -93,7 +94,7 @@
                 var dotIndex;
                 
                 //alert if blank
-                if (email == null || email == "") {
+                if (email === null || email === "") {
                     document.getElementById("em").innerHTML = "***Cannot be blank";
                     return false;
                 } else {
@@ -113,13 +114,13 @@
                     document.getElementById("em").innerHTML = "";
                 }
                 //make sure the ending of the email is edu, org, or com
-                if (email.search("edu") == email.length - 3 && email.search("edu") == dotIndex + 1) {
+                if (email.search("edu") === email.length - 3 && email.search("edu") === dotIndex + 1) {
                     document.getElementById("em").innerHTML = "";
                     return true;
-                } else if (email.search("org") == dotIndex + 1 && email.search("org") == email.length - 3) {
+                } else if (email.search("org") === dotIndex + 1 && email.search("org") === email.length - 3) {
                     document.getElementById("em").innerHTML = "";
                     return true;
-                } else if (email.search("com") == dotIndex + 1 && email.search("com") == email.length - 3) {
+                } else if (email.search("com") === dotIndex + 1 && email.search("com") === email.length - 3) {
                     document.getElementById("em").innerHTML = "";
                     return true;
                 } else {
@@ -139,25 +140,25 @@
     <center>
         <p style="color: blue; font-size: 200%">Sign up here!</p>
 
-        <form name="Registration_Form" action="sign-up" onsubmit="return validateUsername(), validatePassword(), validateEmail() " method="POST">
+        <form name="Registration_Form" action="sign-up" onsubmit="return validateUsername(), validatePassword(), validateEmail()" method="POST">
             <b>Username:</b><br>
-            <input type="text" name="username" onkeyup ="return validateUsername()">                <label style=" color: red" id ="username"></label>
+            <input type="text" name="username" onkeyup="return validateUsername()">                <label style=" color: red" id ="username"></label>
             <p style ="color: red" id ="un"></p>
             <br>
             
             <b>Password:</b>
             <br>
-            <input type="password" name="password" onkeyup ="return validatePassword()">                      <label style=" color: red" id ="password"></label>
+            <input type="password" name="password" onkeyup="return validatePassword()">                      <label style=" color: red" id ="password"></label>
             <p style ="color: red" id ="pass1"></p>
             <br>
             
             <b>Re-enter Password:</b><br>
-            <input type="password" name="password2" onkeyup ="return validatePassword()">                  <label style=" color: red" id ="password2"></label>
+            <input type="password" name="password2" onkeyup="return validatePassword()">                  <label style=" color: red" id ="password2"></label>
             <p style ="color: red"  id ="pass2"></p>
             <br>
             
             <b>E-mail:</b><br>
-            <input type="text" name="email" onkeyup ="return validateEmail()">                        <label style=" color: red" id ="email"></label>
+            <input type="text" name="email" onkeyup="return validateEmail()">                        <label style=" color: red" id ="email"></label>
             <p style ="color: red" id ="em"></p>
             <br>
             
