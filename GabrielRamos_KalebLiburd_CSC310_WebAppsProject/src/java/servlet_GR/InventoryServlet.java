@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Gabriel
  */
-public class BuyingServlet extends HttpServlet {
+@WebServlet(name = "inventory", urlPatterns = {"/inventory"})
+public class InventoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +37,7 @@ public class BuyingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         //retrieve the session of the current user
         HttpSession session = request.getSession(false);
         //store the username stored in session
@@ -43,41 +46,61 @@ public class BuyingServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         //declare an sql statement
         SqlStatement sqlstatement = new SqlStatement();
-        //find all the posted iitems in the marketplace that do not belong to the current user
-        ResultSet result = sqlstatement.executeQuery("SELECT * from market_items WHERE username NOT LIKE '" + username + "'");
+        //store the name of the currency used
+        String nameCurrency = null;
 
         try {
-            if (result.first()) {
-                RequestDispatcher rd = request.getRequestDispatcher("WantToBuy.html");
-                rd.include(request, response);
-                out.println("<form name=\"ItemBuyingForm\" action=\"BoughtServlet\" method=\"POST\">"
-                        + "<select name=\"ItemIDToBuy\">");
-                //did this to reset the list of the results -->
+            //find the name of the currency chosen for the application by looking through the database
+            ResultSet currencyName = sqlstatement.executeQuery("SELECT item_name FROM items WHERE category = 'Currency'");
 
+            //check if sql query found a currency name and save the name
+            if (currencyName.first()) {
+                nameCurrency = currencyName.getString(1);
+                //out.println("found currency");
+            } else {
+                out.println("no currency");
+            }
+
+            //find all the items in the user's inventory excluding currency
+            ResultSet result = sqlstatement.executeQuery("SELECT * from " + username + "_inventory WHERE my_item_name NOT LIKE '"+nameCurrency+"'");
+
+            if (result.first()) {
+
+                //put the inventory on the same page but after all the html content has loaded
+                RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
+                rd.include(request, response);
+
+                //print out the inventory as a drop down box on the welcome page
+                out.println("<center><form name=\"UserInventory\" action=\"InventoryServlet\" method=\"POST\">"
+                        + "<select>"
+                );
+                //print out each row of the result set from the query into the drop down box
                 do {
-                    //add a unique primary key to market_items table so that this can work properly
-                    out.println("<option value=\"" + result.getString(1) + "\">" + result.getString(2) + ", price:" + result.getString(4) + ", quantity:" + result.getString(5) + "</option>");
+                    out.println("<option value=\"" + result.getString(1) + "\">" + result.getString(2) + ", Quantity: " + result.getString(3) + "</option>");
                 } while (result.next());
                 out.println("</select>"
-                        + "<input type=\"submit\" value=\"Buy\"><br>"
-                        + "</form>"
-                        + "<form name =\"backButtonFrom BuyingServlet\" action=\"welcome.html\" method=\"POST\">"
-                        + "<input type = \"submit\" name = \"backButton\" value = \"Back\">"
-                        + "</form>"
+                        + "</form</center>"
                 );
                 result.close();
             } else {
-                RequestDispatcher rd = request.getRequestDispatcher("WantToBuy.html");
+                //there are not items in your inventory
+                RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
                 rd.include(request, response);
+
                 result.close();
-                out.println("<p style=\"color: blue; font-size: 200%\">Sorry, no items listed at this time.</p><br>"
-                        + "<form name =\"backButtonFrom BuyingServlet\" action=\"welcome.html\" method=\"POST\">"
-                        + "<input type = \"submit\" name = \"backButton\" value = \"Back\">"
+
+                //print under the check invetnory button a dropdown box that says you have no items
+                out.println("<center><form name=\"UserInventory\" action=\"InventoryServlet\" method=\"POST\">"
+                        + "<select>"
+                        + "<option value=\"nothing\"> You have no items. </option>"
+                        + "</select>"
                         + "</form>"
+                        + "</center>"
                 );
             }
-            /* TODO output your page here. You may use following sample code. */
+
         } catch (SQLException e) {
+
         }
     }
 

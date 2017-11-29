@@ -55,8 +55,7 @@ public class CurrencyServlet extends HttpServlet {
             ResultSet currencyName = sqlstatement.executeQuery("SELECT item_name FROM items WHERE category = 'Currency'");
 
             //check if sql query found a currency name and save the name
-            if (currencyName.next()) {
-                currencyName.first();
+            if (currencyName.first()) {
                 nameCurrency = currencyName.getString(1);
 //                out.println("found currency");
             } else {
@@ -67,8 +66,7 @@ public class CurrencyServlet extends HttpServlet {
             ResultSet currencyAmount = sqlstatement.executeQuery("SELECT quantity FROM " + username_from_session + "_inventory WHERE my_item_name = '" + nameCurrency + "'");
 
             //check if sql query found money in the user's account and save the amount
-            if (currencyAmount.next()) {
-                currencyAmount.first();
+            if (currencyAmount.first()) {
                 quantCurrency = currencyAmount.getString(1);
 //                out.println("found money");
             } else {
@@ -98,7 +96,7 @@ public class CurrencyServlet extends HttpServlet {
                     + "        </form>\n"
                     + "\n"
                     + "        <form action=\"TradeServlet\" method=\"POST\">\n"
-                    + "            <input type=\"submit\" name=\"WTS\" value=\"WTS\"><br><br><br>\n"
+                    + "            <input type=\"submit\" name=\"Want to Sell\" value=\"Want to Sell\"><br><br><br>\n"
                     + "        </form>\n"
                     + "\n"
                     + "        <form action=\"trade\" method=\"POST\">\n"
@@ -114,6 +112,9 @@ public class CurrencyServlet extends HttpServlet {
                     + "            <p>" + nameCurrency + " : " + currencyAmount.getString(1) + "</p>\n"
                     + "            <input type=\"submit\" value=\"Check Currency\">\n"
                     + "        </form>\n"
+                    + "        <form action=\"inventory\" method=\"POST\">\n"
+                    + "            <input type=\"submit\" value=\"Check Inventory\">\n"
+                    + "        </form>"
                     + "        \n"
                     + "    </center>\n"
                     + "</body>\n"

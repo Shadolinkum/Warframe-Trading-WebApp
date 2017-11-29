@@ -57,7 +57,7 @@ public class MyServlet extends HttpServlet {
             System.out.println("pass test data exec");
             try {
 
-                if (result.next()) {
+                if (result.first()) {
                     System.out.println("Found It");
                     result.close();
                     RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
@@ -72,7 +72,7 @@ public class MyServlet extends HttpServlet {
 
                 } else {
                     result = sqlstatement.executeQuery("SELECT email FROM  members WHERE username = '" + username + "'");
-                    if (result.next()) {
+                    if (result.first()) {
                         System.out.println("Found It");
                         RequestDispatcher rd = request.getRequestDispatcher("errorpage.html");
                         result.close();
